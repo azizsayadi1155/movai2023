@@ -3,103 +3,108 @@
 #include <time.h>
 #include <chrono>
 #include <thread>
-#include <map>
 
 
-
-void printArray(const std::vector<std::string>& array) {
-    for (const auto& element : array) {
+void afficherTableau(const std::vector<std::string>& tableau) {
+    for (const auto& element : tableau) {
         std::cout << element << std::endl;
     }
 }
-void change_pos(int index, std::vector<int>& array){
-    int temp = array[index];
-    int random = rand() % array.size();
-    while (random == index){
-        random = rand() % array.size();
+
+void changerPosition(int index, std::vector<int>& tableau) {
+    int temp = tableau[index];
+    int aleatoire = rand() % tableau.size();
+    while (aleatoire == index) {
+        aleatoire = rand() % tableau.size();
     }
-    array[index] = array[random];
-    array[random] = temp;
+    tableau[index] = tableau[aleatoire];
+    tableau[aleatoire] = temp;
 }
-int guessedNumber(){
-    std::cout<<"Enter a number between 1 and 100 and try to guess the magic number"<<std::endl;
+
+int nombreDevine() {
+    std::cout << "Pour decouvrir la solution, entrez un nombre entre 1 et 100 et essayez de deviner le nombre magique" << std::endl;
     int x;
-    int random_int = rand()%100+1;
-    do{
-        std::cin>>x;
-        x>random_int?std::cout<<" lower ":std::cout<<" higher ";
-    }while(x != random_int); // repeat reading from the user until entering the correct number
-    std::cout<<"Correct! your guessed the magic number : "<<random_int<<std::endl;
+    int entierAleatoire = rand() % 100 + 1;
+    do {
+        std::cin >> x;
+        x > entierAleatoire ? std::cout << " plus bas " : std::cout << " plus haut ";
+    } while (x != entierAleatoire); // répéter la lecture de l'utilisateur jusqu'à ce qu'il entre le bon nombre
+    std::cout << "Correct ! Vous avez deviné le nombre magique : " << entierAleatoire << std::endl;
     return x;
 }
-int transformer(int magic_number){
-    int x = magic_number>30?magic_number/10:magic_number;
+
+int transformer(int nombreMagique) {
+    int x = nombreMagique > 30 ? nombreMagique / 10 : nombreMagique;
     return x;
 }
-// search an element in an array
-int find(std::vector<std::string>& array, int magic_number){
-    int index_of_element;
+
+// rechercher un élément dans un tableau
+int trouver(std::vector<std::string>& tableau, int nombreMagique) {
+    int indexDeLElement;
     int index = 0;
-        while (index != array.size()){
-            if (index == magic_number){
-                index_of_element = index;
-            }
-            index++;
+    while (index != tableau.size()) {
+        if (index == nombreMagique) {
+            indexDeLElement = index;
         }
-    // random function
-    int random_int = rand() % 100+1;
-    while (random_int != magic_number){
+        index++;
+    }
+
+    // générer un nombre aléatoire
+    int entierAleatoire = rand() % 100 + 1;
+    while (entierAleatoire != nombreMagique) {
         index = 0;
-        while (index != array.size()){
-            if (index == magic_number){
-                index_of_element = index;
+        while (index != tableau.size()) {
+            if (index == nombreMagique) {
+                indexDeLElement = index;
             }
             index++;
         }
-        random_int = rand() % 100+1;
+        entierAleatoire = rand() % 100 + 1;
         std::this_thread::sleep_for(std::chrono::seconds(1));
     }
-    return index_of_element;
+    return indexDeLElement;
 }
 
 int main() {
-    srand((unsigned) time(NULL));
-    // create a an array filled with 30 climate change tips
-    std::vector<std::string> climateChangeSolutions = {
-        "Increase the use of renewable energy sources such as solar, wind, and hydropower.",
-        "Implement and enforce strict energy efficiency standards for buildings, appliances, and industrial processes.",
-        "Launch large-scale afforestation programs to plant trees and restore forests.",
-        "Encourage the use of electric vehicles, public transportation, and cycling.",
-        "Invest in research and development of CCS technologies to capture and store carbon dioxide emissions.",
-        "Promote sustainable farming practices to reduce deforestation and limit the use of chemical fertilizers.",
-        "Implement comprehensive waste management strategies to reduce landfill emissions and promote recycling and composting.",
-        "Raise awareness about climate change through educational campaigns.",
-        "Develop and upgrade infrastructure with climate resilience in mind.",
-        "Foster global collaboration and agreements to address climate change on an international scale.",
-        "Implement carbon pricing mechanisms such as carbon taxes or cap-and-trade systems.",
-        "Provide financial incentives for private landowners to engage in reforestation efforts and sustainable land management.",
-        "Enforce and enhance green building standards to promote energy-efficient and environmentally friendly construction practices.",
-        "Increase funding for research and development of clean and sustainable technologies.",
-        "Support community-led initiatives that focus on adapting to the impacts of climate change at the local level.",
-        "Promote a circular economy by encouraging the recycling and reusing of products to minimize waste.",
-        "Encourage a shift toward plant-based diets to reduce the environmental impact of livestock farming.",
-        "Provide financial incentives and subsidies to businesses and individuals investing in renewable energy.",
-        "Invest in the development and promotion of crop varieties that are more resilient to changing climatic conditions.",
-        "Upgrade energy infrastructure with smart grids to improve efficiency and better integrate renewable energy sources.",
-        "Encourage financial institutions to prioritize investments in environmentally sustainable projects.",
-        "Implement measures to protect and restore marine ecosystems, including the reduction of plastic pollution.",
-        "Introduce labels on products indicating their carbon footprint, enabling consumers to make environmentally conscious choices.",
-        "Integrate climate change education into school curricula to ensure future generations are well-informed.",
-        "Support local and sustainable food production to reduce the carbon footprint associated with long-distance transportation.",
-        "Plan and design cities with a focus on sustainability, including green spaces, efficient public transportation, and energy-efficient buildings.",
-        "Provide training to farmers on climate-smart agricultural practices that enhance resilience.",
-        "Invest in scientific research to discover new and innovative solutions for mitigating and adapting to climate change.",
-        "Provide financial and technical assistance to developing nations vulnerable to the impacts of climate change.",
-        "Develop and promote tools for individuals to calculate and reduce their carbon footprint, encouraging personal responsibility."
+    srand((unsigned)time(NULL));
+
+    // créer un tableau rempli de 30 solutionss sur le changement climatique
+    std::vector<std::string> solutionsChangementClimatique = {
+        "Augmenter l'utilisation de sources d'énergie renouvelables telles que le solaire, l'éolien et l'hydroélectricité.",
+        "Mettre en place et appliquer des normes strictes d'efficacité énergétique pour les bâtiments, les appareils et les processus industriels.",
+        "Lancer des programmes de reboisement à grande échelle pour planter des arbres et restaurer les forêts.",
+        "Encourager l'utilisation de véhicules électriques, des transports en commun et du vélo.",
+        "Investir dans la recherche et le développement de technologies de capture et de stockage du dioxyde de carbone.",
+        "Promouvoir des pratiques agricoles durables pour réduire la déforestation et limiter l'utilisation d'engrais chimiques.",
+        "Mettre en œuvre des stratégies complètes de gestion des déchets pour réduire les émissions des décharges et promouvoir le recyclage et le compostage.",
+        "Sensibiliser à propos du changement climatique grâce à des campagnes éducatives.",
+        "Développer et moderniser les infrastructures en tenant compte de la résilience climatique.",
+        "Favoriser la collaboration et les accords mondiaux pour aborder le changement climatique à l'échelle internationale.",
+        "Mettre en place des mécanismes de tarification du carbone tels que des taxes sur le carbone ou des systèmes de plafonnement et d'échange.",
+        "Fournir des incitations financières aux propriétaires terriens privés pour qu'ils s'engagent dans des efforts de reboisement et de gestion durable des terres.",
+        "Appliquer et améliorer les normes de construction écologiques pour promouvoir des pratiques de construction économes en énergie et respectueuses de l'environnement.",
+        "Augmenter le financement de la recherche et du développement de technologies propres et durables.",
+        "Soutenir les initiatives communautaires axées sur l'adaptation aux impacts du changement climatique au niveau local.",
+        "Promouvoir une économie circulaire en encourageant le recyclage et la réutilisation des produits pour minimiser les déchets.",
+        "Encourager un passage vers des régimes alimentaires à base de plantes pour réduire l'impact environnemental de l'élevage.",
+        "Fournir des incitations financières et des subventions aux entreprises et aux particuliers investissant dans les énergies renouvelables.",
+        "Investir dans le développement et la promotion de variétés de cultures plus résilientes aux conditions climatiques changeantes.",
+        "Mettre à niveau les infrastructures énergétiques avec des réseaux intelligents pour améliorer l'efficacité et intégrer mieux les sources d'énergie renouvelable.",
+        "Encourager les institutions financières à privilégier les investissements dans des projets écologiquement durables.",
+        "Mettre en œuvre des mesures de protection et de restauration des écosystèmes marins, y compris la réduction de la pollution plastique.",
+        "Introduire des étiquettes sur les produits indiquant leur empreinte carbone, permettant aux consommateurs de faire des choix écologiques.",
+        "Intégrer l'éducation sur le changement climatique dans les programmes scolaires pour assurer que les futures générations soient bien informées.",
+        "Soutenir la production alimentaire locale et durable pour réduire l'empreinte carbone associée au transport à longue distance.",
+        "Planifier et concevoir des villes en mettant l'accent sur la durabilité, y compris des espaces verts, des transports publics efficaces et des bâtiments économes en énergie.",
+        "Fournir une formation aux agriculteurs sur les pratiques agricoles intelligentes face au climat qui renforcent la résilience.",
+        "Investir dans la recherche scientifique pour découvrir des solutions nouvelles et innovantes pour atténuer et s'adapter au changement climatique.",
+        "Fournir une assistance financière et technique aux nations en développement vulnérables aux impacts du changement climatique.",
+        "Développer et promouvoir des outils permettant aux individus de calculer et de réduire leur empreinte carbone, encourageant la responsabilité personnelle."
     };
-    // Display information for a specific index (e.g., index 5)
-    int specificIndex = find(climateChangeSolutions,transformer(guessedNumber()));
-    std::cout<<climateChangeSolutions[specificIndex]<<std::endl;
-    std::cout<<"end of program!";
+
+    // Afficher les informations pour un index spécifique aleatoire (par exemple, l'index 5)
+    int indexSpecifique = trouver(solutionsChangementClimatique, transformer(nombreDevine()));
+    std::cout << solutionsChangementClimatique[indexSpecifique] << std::endl;
+    std::cout << "Fin du programme !";
     return 0;
 }
